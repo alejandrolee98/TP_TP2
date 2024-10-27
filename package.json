@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "express": "^4.21.1",
+    "mysql2": "^3.11.3",
+    "sequelize": "^6.37.4"
+  },
+  "name": "tp_tp2",
+  "version": "1.0.0",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node .",
+    "dev": "node --watch .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
