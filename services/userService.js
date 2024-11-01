@@ -1,15 +1,31 @@
+import User from "../models/User.js";
 
 class UserService{
-    getAllUserService = () =>{
-        return "users service";
+    getAllUserService = async () =>{
+        try {
+            const data = await User.findAll();
+            return data;
+        } catch (error) {
+            throw error;
+        }
     }
 
-    getUserByIdService = (id) =>{
-        return "users by id service";
+    getUserByIdService = async (id) =>{
+        try {
+            const data = await User.findByPk(id);
+            return data;
+        } catch (error) {
+            throw error;
+        }
     }
 
-    createUserService = (body) =>{
-        return "create service";
+    createUserService = async (nombre, apellido, email, password, direccion, localidad, cp, provincia) =>{
+        try {
+            const data = await User.create({nombre, apellido, email, password, direccion, localidad, cp, provincia})
+            return data;
+        } catch (error) {
+            throw error;
+        }
     }
 
     updateUserService = (id) =>{

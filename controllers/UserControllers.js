@@ -5,48 +5,59 @@ class UserControllers {
 
     userService = new UserService();
 
-    getAllUsers = (req, res) => {
+    getAllUsers = async (req, res) => {
         try {
-            const users = this.userService.getAllUserService();
-            res.status(200).send(users);
+            const users = await this.userService.getAllUserService();
+            res.status(200).send({success:true, message: user});
         } catch (error) {
-            res.status(404).throw(error);
+            res.status(404).send({
+                success:false,
+                message:error.message,
+            });
         }
     }
 
-    getUserById = (req, res) => {
+    getUserById = async (req, res) => {
         try {
-            const user = this.userService.getUserByIdService();
-            res.status(200).send(user);
+            const {id} = req.body;
+            const user = await this.userService.getUserByIdService(id);
+            res.status(200).send({success:true, message: user});
         } catch (error) {
-            res.status(404).throw(error);
+            res.status(404).send({
+                success:false,
+                message:error.message,
+            });
         }
     }
 
-    createUser = (req, res) => {
+    createUser = async (req, res) => {
         try {
-            const user = this.userService.getUserByIdService();
-            res.status(201).send(user);
+            const {nombre, apellido, email, password, direccion, localidad, cp, provincia} = req.body;
+            const user = await this.userService.createUserService(nombre, apellido, email, password, direccion, localidad, cp, provincia);
+            res.status(200).send({success:true, message: user});
         } catch (error) {
-            res.status(404).throw(error);
+            res.status(404).send({
+                success:false,
+                message:error.message,
+            });
         }
     }
 
     updateUser = (req, res) => {
         try {
-            const user = this.userService.getUserByIdService();
+            const user = this.userService.updateUserService();
             res.status(200).send(user);
         } catch (error) {
-            res.status(404).throw(error);
+            res.status(404).send(error);
         }
     }
 
     deleteUser = (req, res) => {
         try {
-            const user = this.userService.getUserByIdService();
+            const user = this.userService.deleteUserService();
             res.status(200).send(user);
         } catch (error) {
-            res.status(404).throw(error);
+            res.status(404).send(error);
         }
     }
 
