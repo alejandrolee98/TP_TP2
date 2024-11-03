@@ -39,6 +39,11 @@ User.init({
    provincia:{
       type: DataTypes.STRING,
       allowNull: false
+   },
+
+   RoleId:{
+      type:DataTypes.INTEGER,
+      defaultValue:2,
    }
 },
 {

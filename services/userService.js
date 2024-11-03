@@ -1,4 +1,4 @@
-import User from "../models/User.js";
+import {User, Role} from "../models/index.js";
 
 class UserService{
     getAllUserService = async () =>{
@@ -32,8 +32,17 @@ class UserService{
         return "update service";
     }
 
-    deleteUserService = (id) =>{
-        return "delete service";
+    deleteUserService = async (userId) =>{
+        try {
+            const data = await User.destroy({
+                where:{
+                    id: userId,
+                }
+            })
+            return data;
+        } catch (error) {
+            throw error;
+        }
     }
 }
 

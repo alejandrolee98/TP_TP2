@@ -10,7 +10,7 @@ app.use(express.urlencoded({extended:true}));
 
 app.use("/app",routes);
 
-await connection.sync({force:true});
+await connection.sync({force:false});
 
 app.listen(8000,()=>{
 

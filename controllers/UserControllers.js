@@ -8,7 +8,7 @@ class UserControllers {
     getAllUsers = async (req, res) => {
         try {
             const users = await this.userService.getAllUserService();
-            res.status(200).send({success:true, message: user});
+            res.status(200).send({success:true, message: users});
         } catch (error) {
             res.status(404).send({
                 success:false,
@@ -52,9 +52,10 @@ class UserControllers {
         }
     }
 
-    deleteUser = (req, res) => {
+    deleteUser = async (req, res) => {
         try {
-            const user = this.userService.deleteUserService();
+            const {id} = req.body;
+            const user = await this.userService.deleteUserService(id);
             res.status(200).send(user);
         } catch (error) {
             res.status(404).send(error);
