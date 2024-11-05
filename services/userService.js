@@ -28,8 +28,22 @@ class UserService{
         }
     }
 
-    updateUserService = (id) =>{
-        return "update service";
+    updateUserService = async (userId, userData) =>{
+        try {
+            const data = await User.update(userData,
+            {
+                where:{
+                    id:userId
+            }});
+
+            if(data>0){
+                return "Usuario actualizado exitosamente."
+            }else{
+                return "No se encontro el usuario."
+            }
+        } catch (error) {
+            throw error;
+        }
     }
 
     deleteUserService = async (userId) =>{
@@ -39,7 +53,11 @@ class UserService{
                     id: userId,
                 }
             })
-            return data;
+            if(data>0){
+                return "Usuario eliminado exitosamente."
+            }else{
+                return "No se encontro el usuario."
+            }
         } catch (error) {
             throw error;
         }

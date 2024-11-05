@@ -19,7 +19,7 @@ class UserControllers {
 
     getUserById = async (req, res) => {
         try {
-            const {id} = req.body;
+            const {id} = req.params;
             const user = await this.userService.getUserByIdService(id);
             res.status(200).send({success:true, message: user});
         } catch (error) {
@@ -43,22 +43,30 @@ class UserControllers {
         }
     }
 
-    updateUser = (req, res) => {
+    updateUser = async (req, res) => {
         try {
-            const user = this.userService.updateUserService();
-            res.status(200).send(user);
+            const {id} = req.params;
+            const {nombre, apellido, email, password, direccion, localidad, cp, provincia} = req.body;
+            const user = await this.userService.updateUserService(id,{nombre, apellido, email, password, direccion, localidad, cp, provincia});
+            res.status(200).send({success:true, message: user});
         } catch (error) {
-            res.status(404).send(error);
+            res.status(404).send({
+                success:false,
+                message:error.message,
+            });
         }
     }
 
     deleteUser = async (req, res) => {
         try {
-            const {id} = req.body;
+            const {id} = req.params;
             const user = await this.userService.deleteUserService(id);
-            res.status(200).send(user);
+            res.status(200).send({success:true, message: user});
         } catch (error) {
-            res.status(404).send(error);
+            res.status(404).send({
+                success:false,
+                message:error.message,
+            });
         }
     }
 
