@@ -1,7 +1,7 @@
 import express from "express";
 import routes from "./routes/router.js";
 import connection from "./connection/connection.js";
-import User from "./models/User.js";
+import { SERVER_PORT } from "./config/config.js";
 
 const app = express();
 
@@ -12,6 +12,6 @@ app.use("/app",routes);
 
 await connection.sync({force:false});
 
-app.listen(8000,()=>{
+app.listen(SERVER_PORT,()=>{
 
 })

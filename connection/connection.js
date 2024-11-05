@@ -1,9 +1,10 @@
 import { Sequelize } from "sequelize";
+import { DB_DIALECT, DB_HOST, DB_NAME, DB_PASS, DB_USER, DB_PORT } from "../config/config";
 
-const connection = new Sequelize("tp2", "root", "admin", {
-    host: 'localhost',
-    dialect: 'mysql',
-    port: 3306
+const connection = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
+    host: DB_HOST,
+    dialect: DB_DIALECT,
+    port: DB_PORT
 });
 
 try {

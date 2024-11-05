@@ -19,9 +19,9 @@ class UserService{
         }
     }
 
-    createUserService = async (nombre, apellido, email, password, direccion, localidad, cp, provincia) =>{
+    createUserService = async (userData) =>{
         try {
-            const data = await User.create({nombre, apellido, email, password, direccion, localidad, cp, provincia})
+            const data = await User.create(userData);
             return data;
         } catch (error) {
             throw error;
