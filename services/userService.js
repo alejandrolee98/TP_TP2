@@ -1,7 +1,7 @@
-import {User, Role} from "../models/index.js";
+import { User, Role } from "../models/index.js";
 
-class UserService{
-    getAllUserService = async () =>{
+class UserService {
+    getAllUserService = async () => {
         try {
             const data = await User.findAll();
             return data;
@@ -10,7 +10,7 @@ class UserService{
         }
     }
 
-    getUserByIdService = async (id) =>{
+    getUserByIdService = async (id) => {
         try {
             const data = await User.findByPk(id);
             return data;
@@ -19,7 +19,7 @@ class UserService{
         }
     }
 
-    createUserService = async (userData) =>{
+    createUserService = async (userData) => {
         try {
             const data = await User.create(userData);
             return data;
@@ -28,17 +28,18 @@ class UserService{
         }
     }
 
-    updateUserService = async (userId, userData) =>{
+    updateUserService = async (userId, userData) => {
         try {
             const data = await User.update(userData,
-            {
-                where:{
-                    id:userId
-            }});
+                {
+                    where: {
+                        id: userId
+                    }
+                });
 
-            if(data>0){
+            if (data > 0) {
                 return "Usuario actualizado exitosamente."
-            }else{
+            } else {
                 return "No se encontro el usuario."
             }
         } catch (error) {
@@ -46,18 +47,30 @@ class UserService{
         }
     }
 
-    deleteUserService = async (userId) =>{
+    deleteUserService = async (userId) => {
         try {
             const data = await User.destroy({
-                where:{
+                where: {
                     id: userId,
                 }
             })
-            if(data>0){
+            if (data > 0) {
                 return "Usuario eliminado exitosamente."
-            }else{
+            } else {
                 return "No se encontro el usuario."
             }
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    loginUserService = async (user) => {
+        try {
+            const { email, password } = user;
+            const data = await User.findOne({ where: { email } });
+            if (!data) throw new Error("El usuario no existe");
+            const compararPass = await User.comparar(password);
+            return data;
         } catch (error) {
             throw error;
         }

@@ -70,6 +70,19 @@ class UserControllers {
         }
     }
 
+    login = async (req, res) => {
+        try {
+            const {email, password} = req.body;
+            const user = await this.userService.loginUserService({email, password});
+            res.status(200).send({success:true, message: user});
+        } catch (error) {
+            res.status(404).send({
+                success:false,
+                message:error.message,
+            });
+        }
+    }
+
 }
 
 export default UserControllers;
