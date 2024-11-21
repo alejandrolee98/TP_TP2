@@ -1,4 +1,5 @@
-import { User, Role } from "../models/index.js";
+import { User } from "../models/index.js";
+import { genToken, verifyToken } from "../utils/token.js";
 
 class UserService {
     getAllUserService = async () => {
@@ -21,8 +22,8 @@ class UserService {
 
     createUserService = async (userData) => {
         try {
-            const data = await User.create(userData);
-            return data;
+            await User.create(userData);
+            return "Usuario creado con exito";
         } catch (error) {
             throw error;
         }
@@ -69,8 +70,27 @@ class UserService {
             const { email, password } = user;
             const data = await User.findOne({ where: { email } });
             if (!data) throw new Error("El usuario no existe");
-            const compararPass = await User.comparar(password);
-            return data;
+            const compararPass = await data.comparar(password);
+            if (!compararPass) throw new Error("El usuario no existe");
+
+            const payload = {
+                id: data.id,
+                email: data.email,
+                RoleId: data.RoleId,
+            }
+            
+            const token = genToken(payload);
+
+            return token;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    me = async (token)=>{
+        try {
+            const verify = verifyToken(token);
+            return verify.data;
         } catch (error) {
             throw error;
         }
